@@ -9,12 +9,4 @@ angular.module('OpenSailing.services', ['ngResource'])
             update: {method:'PUT'},
             remove: {method:'DELETE'}
         })
-    }
-    .factory('TrackService', function($resource) {
-        return $resource('api/tracks/:trackId', {}, {
-            query: {method: 'GET', params: {trackId: 'list'}, isArray: true},
-            post: {method: 'POST', params: {trackId: 'new'}},
-            update: {method: 'PUT'},
-            remove: {method: 'DELETE'}
-        })
-    }));
+    });
