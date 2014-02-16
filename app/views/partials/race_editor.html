@@ -1,0 +1,62 @@
+<div ng-controller="RaceEditorController">
+    <h1>Race Editor</h1>
+    <h5 class="subheader">You can setup your own race event here. Define the race courses by using the graphical editor
+        to place way points, starting and finishing lines etc.</h5>
+
+    <form name="race_form" novalidate>
+        <div class="row">
+            <div class="small-1 columns">
+                <label for="race_name" class="right inline"><strong>Name</strong></label>
+            </div>
+            <div class="small-4 columns">
+                <input type="text" name="name" ng-model="race.name" id="race_name" placeholder="name of event">
+            </div>
+            <div class="small-1 columns">
+                <label for="race_date_from" class="right inline"><strong>Dates</strong></label>
+            </div>
+            <div class="small-3 columns">
+                <input type="date" name="start_date" ng-model="race.start_date" id="race_date_from">
+            </div>
+            <div class="small-3 columns">
+                <input type="date" name="end_date" ng-model="race.end_date" id="race_date_to" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-1 columns">
+                <label for="race_description" class="right inline"><strong>Description</strong></label>
+            </div>
+            <div class="small-11 columns">
+                <textarea rows="5" id="race_description" name="race.description" ng-model="race.description"
+                          placeholder="description of event"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-3 columns">
+
+            </div>
+            <div class="small-9 columns">
+
+                <span>Race Course</span>
+                <google-map center='map.center' zoom='map.zoom'></google-map>
+            </div>
+        </div>
+        <div class="row">
+            <div class="button-bar right">
+                <ul class="button-group">
+                    <li>
+                        <button class="button alert" ng-click="deleteForm()"
+                                ng-disabled="race_form.$invalid || !race._id">Delete
+                        </button>
+                    </li>
+                    <li>
+                        <button class="button success" ng-click="saveForm()"
+                                ng-disabled="race_form.$invalid">Submit
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+    {{ race }}
+</div>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html class="lt-ie10" lang="en"> <![endif]-->
+<html class="no-js" lang="en" ng-app="OpenSailing">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/foundation-icons.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="js/vendor/modernizr.js"></script>
+
+</head>
+<body>
+<!-- top bar -->
+<nav class="top-bar" data-topbar>
+    <ul class="title-area">
+        <li class="name">
+            <h1><a href="#">OpenSailing</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+    </ul>
+    <section class="top-bar-section">
+        <ul class="right">
+            <li class="divider"></li>
+            <li>
+                <a href="#/login" class>Login</a>
+            </li>
+        </ul>
+    </section>
+</nav>
+<section role="main">
+    <div class="row">
+        <div class="small-3 columns">
+            <div class="sidebar">
+                <nav>
+                    <ul class="side-nav">
+                        <li class="heading">Events</li>
+                        <li><a href="#/races">Dashboard</a></li>
+                        <li><a href="#/newRace">Race Editor</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="small-9 columns" ng-view>
+        </div>
+    </div>
+</section>
+<!-- Foundation CSS Framework -->
+<script src="js/vendor/jquery.js"></script>
+<script src="js/vendor/foundation.min.js"></script>
+<script src="js/vendor/foundation.topbar.js"></script>
+<!-- Additional Foundation plug-ins -->
+<script src="js/vendor/masonry.pkgd.min.js"></script>
+<!-- Angular.JS Framework -->
+<script src="js/vendor/angular.min.js"></script>
+<script src="js/vendor/angular-route.min.js"></script>
+<script src="js/vendor/angular-resource.min.js"></script>
+<!-- Google Maps Angular Directives -->
+<script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="js/vendor/underscore-min.js"></script>
+<script src="js/vendor/angular-google-maps.min.js"></script>
+<!-- OpenSailing App -->
+<script src="js/controllers.js"></script>
+<script src="js/services.js"></script>
+<script src="js/app.js"></script>
+
+
+<script>
+    $(document).foundation();
+</script>
+</body>
+</html>

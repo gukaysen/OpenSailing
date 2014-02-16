@@ -1,0 +1,28 @@
+<div ng-controller="RaceDashboardController">
+    <h1>Dashboard</h1>
+    <h5>Search for current and past race event and view statistics.</h5>
+    <dl class="sub-nav">
+        <dt>Filter:</dt>
+        <dd ng-class="{active: dashboard.filter === 'current'}"><a ng-click="dashboard.filter = 'current'">Current</a>
+        </dd>
+        <dd ng-class="{active: dashboard.filter === 'upcoming'}"><a
+                ng-click="dashboard.filter = 'upcoming'">Upcoming</a></dd>
+        <dd ng-class="{active: dashboard.filter === 'all'}"><a ng-click="dashboard.filter = 'all'">All</a></dd>
+    </dl>
+    <div id="dashboardRaceContainer" class="js-masonry"
+         data-masonry-options="{'column-width' : 200, 'itemSelector' : '.raceItem'}"
+         ng-repeat="race in dashboard.races">
+        <div class="raceItem" ng-click="editForm(race._id)">
+            <p><strong>{{race.name}}</strong></p>
+
+            <p>{{race.description}}</p>
+
+            <p>
+                <small>{{race.start_date | date:'short'}} - {{race.end_date | date:'short'}}</small>
+            </p>
+        </div>
+    </div>
+    <!--
+    <h3>{{dashboard}}</h3>
+    -->
+</div>
