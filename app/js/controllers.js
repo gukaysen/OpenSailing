@@ -18,17 +18,15 @@ angular.module('OpenSailing.controllers', [])
             name: undefined,
             description: undefined,
             start_date: undefined,
-            end_date: undefined
+            end_date: undefined,
+            tracks: [
+                {
+                    name: undefined
+                }
+            ]
         };
 
-        $scope.map = {
-            center: {
-                latitude: 45,
-                longitude: -73
-            },
-            zoom: 8,
-            markers: []
-        };
+
 
         if ($routeParams.raceId != 'undefined') {
             $scope.race = RaceService.get({raceId: $routeParams.raceId});
@@ -47,6 +45,17 @@ angular.module('OpenSailing.controllers', [])
             $scope.race = {};
 
         };
+
+        // addTrack() function for web form
+        $scope.addTrack = function() {
+            console.log('addTrack() called');
+            $scope.race.tracks.push(
+                {
+                    name: 'Name of track'
+                }
+            );
+            $scope.$apply();
+        }
 
 
     })

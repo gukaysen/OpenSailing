@@ -31,14 +31,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="small-3 columns">
-
-            </div>
-            <div class="small-9 columns">
-
-                <span>Race Course</span>
-                <google-map center='map.center' zoom='map.zoom'></google-map>
-            </div>
+            <span>Race Tracks</span>
+            <ul class="pagination">
+                <li ng-repeat="track in race.tracks"><a href="">{{ $index + 1}}</a> </li>
+                <li class="fi-page-add" ng-click="addTrack()"></li>
+            </ul>
+            <li ng-repeat="track in race.tracks">
+                {{ track }}
+            </li>
+            <button class="button success" ng-click="addTrack()">Add Race Track</button>
         </div>
         <div class="row">
             <div class="button-bar right">
