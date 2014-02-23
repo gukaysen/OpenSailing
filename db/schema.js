@@ -97,6 +97,7 @@ exports.BoatSchema = new mongoose.Schema(
 exports.TrackSchema = new mongoose.Schema(
     {
         name: String,
+        description: String,
         starting_line: {
             mark_1_loc: {type: [Number], index: '2D'},
             mark_2_loc: {type: [Number], index: '2D'}
