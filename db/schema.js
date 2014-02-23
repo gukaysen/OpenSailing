@@ -8,75 +8,6 @@ var mongoose = require('mongoose'),
     TrackSchema,
     RaceSchema;
 
-exports.UserSchema = new mongoose.Schema(
-    {
-        name: String,
-        first_name: String,
-        last_name: String,
-        email: String
-    },
-    {
-        collection: 'users'
-    }
-);
-
-exports.BoatSpecSchema = new mongoose.Schema(
-    {
-        name: String,
-        length: Number,
-        width: Number,
-        sail_are: Number,
-        class_type: String,
-        yardstick: Number,
-        img: String
-    },
-    {
-        collection: 'boat_specs'
-    }
-);
-
-exports.BoatSchema = new mongoose.Schema(
-    {
-        sail_number: String,
-        name: String,
-        boat_spec_id: Number,
-        building_year: Number,
-        contact_id: Number
-    },
-    {
-        collection: 'boats'
-    }
-);
-
-exports.TrackSchema = new mongoose.Schema(
-    {
-        name: String,
-        starting_line: {
-            mark_1_loc: {type: [Number], index: '2D'},
-            mark_2_loc: {type: [Number], index: '2D'}
-        },
-        finishing_line: {
-            mark_1_loc: {type: [Number], index: '2D'},
-            mark_2_loc: {type: [Number], index: '2D'}
-        },
-        waypoints: [
-            {
-                name: String,
-                mark_loc: {type: [Number], index: '2D'}
-            }
-        ],
-        course: [
-            {
-                order: Number,
-                wp_name: String
-            }
-        ]
-    },
-    {
-        collection: 'tracks'
-    }
-);
-
 exports.RaceSchema = new mongoose.Schema(
     {
         name: String,
@@ -84,11 +15,7 @@ exports.RaceSchema = new mongoose.Schema(
         start_date: Date,
         end_date: Date,
         status: String,
-        tracks: [
-            {
-                track_id: Number
-            }
-        ],
+        tracks: [TrackSchema],
         participants: [
             {
                 boat_id: Number
@@ -119,6 +46,80 @@ exports.RaceSchema = new mongoose.Schema(
         ]
     },
     {
-        collection: 'races'
+        collection: 'races',
+        strict: true
+    }
+);
+
+exports.UserSchema = new mongoose.Schema(
+    {
+        name: String,
+        first_name: String,
+        last_name: String,
+        email: String
+    },
+    {
+        collection: 'users',
+        strict: true
+    }
+);
+
+exports.BoatSpecSchema = new mongoose.Schema(
+    {
+        name: String,
+        length: Number,
+        width: Number,
+        sail_are: Number,
+        class_type: String,
+        yardstick: Number,
+        img: String
+    },
+    {
+        collection: 'boat_specs',
+        strict : true
+    }
+);
+
+exports.BoatSchema = new mongoose.Schema(
+    {
+        sail_number: String,
+        name: String,
+        boat_spec_id: Number,
+        building_year: Number,
+        contact_id: Number
+    },
+    {
+        collection: 'boats',
+        strict : true
+    }
+);
+
+exports.TrackSchema = new mongoose.Schema(
+    {
+        name: String,
+        starting_line: {
+            mark_1_loc: {type: [Number], index: '2D'},
+            mark_2_loc: {type: [Number], index: '2D'}
+        },
+        finishing_line: {
+            mark_1_loc: {type: [Number], index: '2D'},
+            mark_2_loc: {type: [Number], index: '2D'}
+        },
+        waypoints: [
+            {
+                name: String,
+                mark_loc: {type: [Number], index: '2D'}
+            }
+        ],
+        course: [
+            {
+                order: Number,
+                wp_name: String
+            }
+        ]
+    },
+    {
+        collection: 'tracks',
+        strict : true
     }
 );

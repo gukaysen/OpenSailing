@@ -31,16 +31,30 @@
             </div>
         </div>
         <div class="row">
-            <span>Race Tracks</span>
-            <ul class="pagination">
-                <li ng-repeat="track in race.tracks"><a href="">{{ $index + 1}}</a> </li>
-                <li class="fi-page-add" ng-click="addTrack()"></li>
-            </ul>
-            <li ng-repeat="track in race.tracks">
-                {{ track }}
-            </li>
-            <button class="button success" ng-click="addTrack()">Add Race Track</button>
+            <div class="small-1 columns">
+                <label for="race_tracks" class="right inline"><strong>Race Tracks</strong></label>
+            </div>
+            <div class="small-11 columns" id="race_tracks">
+                <dl class="tabs" data-tab>
+                    <dd ng-repeat="track in race.tracks" ng-class="{active: $index === race.selectedTrack}" ng-click="selectTrack($index)"><a>Track {{$index+1}}</a></dd>
+                    <dd ng-click="addTrack()"><a>Add New Track</a></dd>
+                </dl>
+            </div>
         </div>
+
+        <div class="row">
+            <div class="small-1 columns">
+                <label for="track_name" class="right inline"><strong>Track Name</strong></label>
+                <label for="track_description" class="right inline"><strong>Description</strong></label>
+            </div>
+            <div class="small-11 columns">
+                <input type="text" name="track_name" ng-model="race.tracks[race.selectedTrack].name" id="track_name" placeholder="name of track">
+                <input type="text" name="track_description" ng-model="race.tracks[race.selectedTrack].description" id="track_description" placeholder="description of track">
+                {{race.tracks[race.selectedTrack]._id}}
+            </div>
+
+        </div>
+
         <div class="row">
             <div class="button-bar right">
                 <ul class="button-group">

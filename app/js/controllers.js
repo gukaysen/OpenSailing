@@ -19,9 +19,11 @@ angular.module('OpenSailing.controllers', [])
             description: undefined,
             start_date: undefined,
             end_date: undefined,
+            selectedTrack : undefined,
             tracks: [
                 {
-                    name: undefined
+                    name: undefined,
+                    description: undefined
                 }
             ]
         };
@@ -49,12 +51,22 @@ angular.module('OpenSailing.controllers', [])
         // addTrack() function for web form
         $scope.addTrack = function() {
             console.log('addTrack() called');
+            if (!$scope.race.tracks) {
+                $scope.race.tracks = new Array();
+            }
+
             $scope.race.tracks.push(
                 {
-                    name: 'Name of track'
+                    name: 'Name of track',
+                    description: 'Description of track'
                 }
             );
-            $scope.$apply();
+            $scope.race.selectedTrack = $scope.race.tracks.length-1;
+        };
+
+        // selectTrack() function for web form
+        $scope.selectTrack = function(index) {
+            $scope.race.selectedTrack = index;
         }
 
 
