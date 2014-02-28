@@ -25,7 +25,6 @@ exports.saveRace = function (req, res) {
         delete newBo['_id'];
         var query = {"_id" : req.body._id};
 
-        console.log(newBo);
 
         race = RaceBO.findOneAndUpdate(query, newBo, function (err, doc) {
             if (err || !doc) {

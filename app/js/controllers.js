@@ -28,7 +28,21 @@ angular.module('OpenSailing.controllers', [])
             ]
         };
 
-
+        $scope.map = {
+            center: {
+                latitude: 45,
+                longitude: -73
+            },
+            zoom: 8,
+            draggable: true,
+            options: {
+                mapTypeControl: false,
+                mapTypeId: 'hybrid',
+                overviewMapControl: false,
+                streetViewControl: false,
+                tilt: 45
+            }
+        };
 
         if ($routeParams.raceId != 'undefined') {
             $scope.race = RaceService.get({raceId: $routeParams.raceId});
@@ -52,7 +66,7 @@ angular.module('OpenSailing.controllers', [])
         $scope.addTrack = function() {
             console.log('addTrack() called');
             if (!$scope.race.tracks) {
-                $scope.race.tracks = new Array();
+                $scope.race.tracks = [];
             }
 
             $scope.race.tracks.push(
@@ -67,9 +81,13 @@ angular.module('OpenSailing.controllers', [])
         // selectTrack() function for web form
         $scope.selectTrack = function(index) {
             $scope.race.selectedTrack = index;
-        }
+        };
 
-
+        // deleteTrack() function for web form
+        $scope.deleteTrack = function(index) {
+            $scope.race.tracks.splice(index, 1);
+            $scope.race.selectedTrack = $scope.race.tracks.length === 0 ? undefined : $scope.race.tracks.length - 1;
+        };
     })
     .controller('LoginController', function ($scope) {
         $scope.login = {

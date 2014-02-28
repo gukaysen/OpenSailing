@@ -1,14 +1,39 @@
 /**
  * Created by gukaysen on 07.01.14.
  */
-var mongoose = require('mongoose'),
-    UserSchema,
-    BoatSpecSchema,
-    BoatSchema,
-    TrackSchema,
-    RaceSchema;
+var mongoose = require('mongoose');
 
-exports.RaceSchema = new mongoose.Schema(
+var TrackSchema = new mongoose.Schema(
+    {
+        name: String,
+        starting_line: {
+            mark_1_loc: {type: [Number], index: '2D'},
+            mark_2_loc: {type: [Number], index: '2D'}
+        },
+        finishing_line: {
+            mark_1_loc: {type: [Number], index: '2D'},
+            mark_2_loc: {type: [Number], index: '2D'}
+        },
+        waypoints: [
+            {
+                name: String,
+                mark_loc: {type: [Number], index: '2D'}
+            }
+        ],
+        course: [
+            {
+                order: Number,
+                wp_name: String
+            }
+        ]
+    },
+    {
+        collection: 'tracks',
+        strict : true
+    }
+);
+
+var RaceSchema = new mongoose.Schema(
     {
         name: String,
         description: String,
@@ -51,7 +76,7 @@ exports.RaceSchema = new mongoose.Schema(
     }
 );
 
-exports.UserSchema = new mongoose.Schema(
+var UserSchema = new mongoose.Schema(
     {
         name: String,
         first_name: String,
@@ -64,7 +89,7 @@ exports.UserSchema = new mongoose.Schema(
     }
 );
 
-exports.BoatSpecSchema = new mongoose.Schema(
+var BoatSpecSchema = new mongoose.Schema(
     {
         name: String,
         length: Number,
@@ -80,7 +105,7 @@ exports.BoatSpecSchema = new mongoose.Schema(
     }
 );
 
-exports.BoatSchema = new mongoose.Schema(
+var BoatSchema = new mongoose.Schema(
     {
         sail_number: String,
         name: String,
@@ -94,33 +119,4 @@ exports.BoatSchema = new mongoose.Schema(
     }
 );
 
-exports.TrackSchema = new mongoose.Schema(
-    {
-        name: String,
-        description: String,
-        starting_line: {
-            mark_1_loc: {type: [Number], index: '2D'},
-            mark_2_loc: {type: [Number], index: '2D'}
-        },
-        finishing_line: {
-            mark_1_loc: {type: [Number], index: '2D'},
-            mark_2_loc: {type: [Number], index: '2D'}
-        },
-        waypoints: [
-            {
-                name: String,
-                mark_loc: {type: [Number], index: '2D'}
-            }
-        ],
-        course: [
-            {
-                order: Number,
-                wp_name: String
-            }
-        ]
-    },
-    {
-        collection: 'tracks',
-        strict : true
-    }
-);
+exports.RaceSchema = RaceSchema;

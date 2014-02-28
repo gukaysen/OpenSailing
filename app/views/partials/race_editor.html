@@ -47,12 +47,26 @@
                 <label for="track_name" class="right inline"><strong>Track Name</strong></label>
                 <label for="track_description" class="right inline"><strong>Description</strong></label>
             </div>
-            <div class="small-11 columns">
+            <div class="small-8 columns">
                 <input type="text" name="track_name" ng-model="race.tracks[race.selectedTrack].name" id="track_name" placeholder="name of track">
-                <input type="text" name="track_description" ng-model="race.tracks[race.selectedTrack].description" id="track_description" placeholder="description of track">
-                {{race.tracks[race.selectedTrack]._id}}
             </div>
+            <div class="small-3 columns">
+                <button class="button alert" ng-click="deleteTrack(race.selectedTrack)" ng-disabled="race.selectedTrack === undefined">Delete Track</button>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="small-12 columns">
+                <google-map
+                        center="map.center"
+                        zoom="map.zoom"
+                        draggable="map.draggable"
+                        options="map.options"
+
+                        >
+
+                </google-map>
+            </div>
         </div>
 
         <div class="row">
