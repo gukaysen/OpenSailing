@@ -37,7 +37,7 @@
             <div class="small-11 columns" id="race_tracks">
                 <dl class="tabs" data-tab>
                     <dd ng-repeat="track in race.tracks" ng-class="{active: $index === race.selectedTrack}" ng-click="selectTrack($index)"><a>Track {{$index+1}}</a></dd>
-                    <dd ng-click="addTrack()"><a>Add New Track</a></dd>
+                    <dd ng-click="adtTrack()"><a>Adt New Track</a></dd>
                 </dl>
             </div>
         </div>
@@ -45,27 +45,45 @@
         <div class="row">
             <div class="small-1 columns">
                 <label for="track_name" class="right inline"><strong>Track Name</strong></label>
-                <label for="track_description" class="right inline"><strong>Description</strong></label>
             </div>
             <div class="small-8 columns">
                 <input type="text" name="track_name" ng-model="race.tracks[race.selectedTrack].name" id="track_name" placeholder="name of track">
             </div>
             <div class="small-3 columns">
-                <button class="button alert" ng-click="deleteTrack(race.selectedTrack)" ng-disabled="race.selectedTrack === undefined">Delete Track</button>
+                <button class="tiny button alert" ng-click="deleteTrack(race.selectedTrack)" ng-disabled="race.selectedTrack === undefined">Delete Track</button>
             </div>
         </div>
 
         <div class="row">
-            <div class="small-12 columns">
+            <div class="small-1 columns">
+                <dl class="tabs vertical" ng-hide="race.selectedTrack === undefined">
+                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'SL_SELECT'}" ng-click="selectTrackMode('SL_SELECT')"><a class="right fi-flag">Starting Line</a></dd>
+                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'RM_SELECT'}" ng-click="selectTrackMode('RM_SELECT')"><a class="right fi-loop">Rounding Marks</a></dd>
+                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'FL_SELECT'}" ng-click="selectTrackMode('FL_SELECT')"><a class="right fi-target">Finishing Line</a></dd>
+                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'WP_SELECT'}" ng-click="selectTrackMode('WP_SELECT')"><a class="right fi-marker">Waypoints</a></dd>
+                </dl>
+            </div>
+            <div class="small-11 columns">
                 <google-map
                         center="map.center"
                         zoom="map.zoom"
-                        draggable="map.draggable"
+                        draggable="true"
+                        dragging = "map.dragging"
                         options="map.options"
-
-                        >
+                        bounds = "map.bounds"
+                        pan = "true"
+                        events = "map.events">
+                    <polyline ng-if="map.starting_line.path[0].latitude != undefined"
+                        path = "map.starting_line.path"
+                        stroke = "map.starting_line.stroke"
+                        editable = "true"
+                        draggable = "true"
+                        geodesic = "false"
+                        visible = "true">
+                    </polyline>
 
                 </google-map>
+
             </div>
         </div>
 
@@ -86,6 +104,6 @@
             </div>
         </div>
     </form>
-
-    {{ race }}
+   {{ map }}
+   {{race | json}}
 </div>

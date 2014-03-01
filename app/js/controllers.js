@@ -14,6 +14,9 @@ angular.module('OpenSailing.controllers', [])
         }
     })
     .controller('RaceEditorController', function ($scope, $routeParams, RaceService) {
+
+        google.maps.visualRefresh = true;
+
         $scope.race = {
             name: undefined,
             description: undefined,
@@ -23,7 +26,8 @@ angular.module('OpenSailing.controllers', [])
             tracks: [
                 {
                     name: undefined,
-                    description: undefined
+                    description: undefined,
+                    mode: undefined
                 }
             ]
         };
@@ -33,14 +37,51 @@ angular.module('OpenSailing.controllers', [])
                 latitude: 45,
                 longitude: -73
             },
-            zoom: 8,
+            zoom: 20,
             draggable: true,
+            dragging: false,
             options: {
                 mapTypeControl: false,
                 mapTypeId: 'hybrid',
                 overviewMapControl: false,
                 streetViewControl: false,
-                tilt: 45
+                tilt: 45,
+                panControl: false
+
+            },
+            bounds: {},
+            starting_line: {
+                path: [
+                    {
+                        latitude: undefined,
+                        longitude: undefined
+                    },
+                    {
+                        latitude: undefined,
+                        longitude: undefined
+                    }],
+                stroke: {
+                    color: '#6060FB',
+                    weight: 2
+                }
+
+            },
+            finishing_line: {},
+            waypoints: {},
+            events: {
+                tilesloaded: function(amp, eventName, originalEventArgs) {
+
+                },
+                click: function(mapModel, eventName, originalEventArgs) {
+                    console.log('click_event received: ' + eventName);
+                    var e = originalEventArgs[0];
+                    $scope.map.starting_line.path[0].latitude = e.latLng.lat();
+                    $scope.map.starting_line.path[0].longitude = e.latLng.lng() - 0.001;
+                    $scope.map.starting_line.path[1].latitude = e.latLng.lat();
+                    $scope.map.starting_line.path[1].longitude = e.latLng.lng() + 0.001;
+
+                    $scope.$apply();
+                }
             }
         };
 
@@ -72,7 +113,7 @@ angular.module('OpenSailing.controllers', [])
             $scope.race.tracks.push(
                 {
                     name: 'Name of track',
-                    description: 'Description of track'
+                    mode: 'SL_SELECT'
                 }
             );
             $scope.race.selectedTrack = $scope.race.tracks.length-1;
@@ -88,6 +129,18 @@ angular.module('OpenSailing.controllers', [])
             $scope.race.tracks.splice(index, 1);
             $scope.race.selectedTrack = $scope.race.tracks.length === 0 ? undefined : $scope.race.tracks.length - 1;
         };
+
+        // selectTrackMode() function for web form
+        $scope.selectTrackMode = function (mode) {
+            console.log('selectTrackMode called: ' + mode);
+            if ($scope.race.selectedTrack != undefined) {
+                if ($scope.race.tracks[$scope.race.selectedTrack].mode != mode) {
+                    $scope.race.tracks[$scope.race.selectedTrack].mode = mode;
+                } else {
+                    $scope.race.tracks[$scope.race.selectedTrack].mode = undefined;
+                }
+            }
+        }
     })
     .controller('LoginController', function ($scope) {
         $scope.login = {
