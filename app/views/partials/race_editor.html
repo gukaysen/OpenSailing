@@ -5,81 +5,98 @@
 
     <form name="race_form" novalidate>
         <div class="row">
-            <div class="small-1 columns">
-                <label for="race_name" class="right inline"><strong>Name</strong></label>
+            <div class="small-12 medium-12 large-6 columns">
+                <label>
+                    <strong>Name:</strong>
+                    <input type="text" name="name" ng-model="race.name" id="race_name" placeholder="name of event">
+                </label>
             </div>
-            <div class="small-4 columns">
-                <input type="text" name="name" ng-model="race.name" id="race_name" placeholder="name of event">
+            <div class="small-12 medium-6 large-3 columns">
+                <label>
+                    <strong>Start Date:</strong>
+                    <input type="date" name="start_date" ng-model="race.start_date" id="race_date_from">
+                </label>
             </div>
-            <div class="small-1 columns">
-                <label for="race_date_from" class="right inline"><strong>Dates</strong></label>
-            </div>
-            <div class="small-3 columns">
-                <input type="date" name="start_date" ng-model="race.start_date" id="race_date_from">
-            </div>
-            <div class="small-3 columns">
-                <input type="date" name="end_date" ng-model="race.end_date" id="race_date_to" required>
-            </div>
-        </div>
-        <div class="row">
-            <div class="small-1 columns">
-                <label for="race_description" class="right inline"><strong>Description</strong></label>
-            </div>
-            <div class="small-11 columns">
-                <textarea rows="5" id="race_description" name="race.description" ng-model="race.description"
-                          placeholder="description of event"/>
+            <div class="small-12 medium-6 large-3 columns">
+                <label>
+                    <strong>End Date:</strong>
+                    <input type="date" name="end_date" ng-model="race.end_date" id="race_date_to" required>
+                </label>
             </div>
         </div>
+
         <div class="row">
-            <div class="small-1 columns">
-                <label for="race_tracks" class="right inline"><strong>Race Tracks</strong></label>
+            <div class="small-12 columns">
+                <label>
+                    <strong>Description:</strong>
+                    <textarea rows="5" id="race_description" name="race.description" ng-model="race.description"
+                              placeholder="description of event"/>
+                </label>
             </div>
-            <div class="small-11 columns" id="race_tracks">
-                <dl class="tabs" data-tab>
-                    <dd ng-repeat="track in race.tracks" ng-class="{active: $index === race.selectedTrack}" ng-click="selectTrack($index)"><a>Track {{$index+1}}</a></dd>
-                    <dd ng-click="adtTrack()"><a>Adt New Track</a></dd>
+        </div>
+
+        <div class="row">
+            <div class="small-12 columns">
+                <label>
+                    <strong>Race Tracks:</strong>
+                    <dl class="tabs" data-tab>
+                        <dd ng-repeat="track in race.tracks" ng-class="{active: $index === race.selectedTrack}"
+                            ng-click="selectTrack($index)"><a>Track {{$index+1}}</a></dd>
+                        <dd ng-click="addTrack()"><a class="fi-plus"></a></dd>
+                    </dl>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="small-9 columns">
+                <input type="text" name="track_name" ng-model="race.tracks[race.selectedTrack].name" id="track_name"
+                       placeholder="name of track">
+            </div>
+            <div class="small-3 columns">
+                <button class="tiny button alert" ng-click="deleteTrack(race.selectedTrack)"
+                        ng-disabled="race.selectedTrack === undefined"><span class="fi-alert"></span> Delete Track
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="small-12 columns">
+                <dl class="tabs" data-tab ng-hide="race.selectedTrack === undefined">
+                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'SL_SELECT'}">
+                        <a class="fi-flag" ng-click="selectTrackMode('SL_SELECT')"> Starting Line</a>
+                    </dd>
+                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'RM_SELECT'}">
+                        <a class="fi-loop" ng-click="selectTrackMode('RM_SELECT')"> Rounding Marks </a>
+                    </dd>
+                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'FL_SELECT'}">
+                        <a class="fi-target" ng-click="selectTrackMode('FL_SELECT')"> Finishing Line </a>
+                    </dd>
+                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'WP_SELECT'}">
+                        <a class="fi-marker" ng-click="selectTrackMode('WP_SELECT')"> Waypoints </a>
+                    </dd>
                 </dl>
             </div>
         </div>
 
         <div class="row">
-            <div class="small-1 columns">
-                <label for="track_name" class="right inline"><strong>Track Name</strong></label>
-            </div>
-            <div class="small-8 columns">
-                <input type="text" name="track_name" ng-model="race.tracks[race.selectedTrack].name" id="track_name" placeholder="name of track">
-            </div>
-            <div class="small-3 columns">
-                <button class="tiny button alert" ng-click="deleteTrack(race.selectedTrack)" ng-disabled="race.selectedTrack === undefined">Delete Track</button>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="small-1 columns">
-                <dl class="tabs vertical" ng-hide="race.selectedTrack === undefined">
-                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'SL_SELECT'}" ng-click="selectTrackMode('SL_SELECT')"><a class="right fi-flag">Starting Line</a></dd>
-                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'RM_SELECT'}" ng-click="selectTrackMode('RM_SELECT')"><a class="right fi-loop">Rounding Marks</a></dd>
-                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'FL_SELECT'}" ng-click="selectTrackMode('FL_SELECT')"><a class="right fi-target">Finishing Line</a></dd>
-                    <dd ng-class="{active: race.tracks[race.selectedTrack].mode === 'WP_SELECT'}" ng-click="selectTrackMode('WP_SELECT')"><a class="right fi-marker">Waypoints</a></dd>
-                </dl>
-            </div>
-            <div class="small-11 columns">
+            <div class="small-12 columns">
                 <google-map
                         center="map.center"
                         zoom="map.zoom"
                         draggable="true"
-                        dragging = "map.dragging"
+                        dragging="map.dragging"
                         options="map.options"
-                        bounds = "map.bounds"
-                        pan = "true"
-                        events = "map.events">
+                        bounds="map.bounds"
+                        pan="true"
+                        events="map.events">
                     <polyline ng-if="map.starting_line.path[0].latitude != undefined"
-                        path = "map.starting_line.path"
-                        stroke = "map.starting_line.stroke"
-                        editable = "true"
-                        draggable = "true"
-                        geodesic = "false"
-                        visible = "true">
+                              path="map.starting_line.path"
+                              stroke="map.starting_line.stroke"
+                              editable="true"
+                              draggable="true"
+                              geodesic="false"
+                              visible="true">
                     </polyline>
 
                 </google-map>
@@ -104,6 +121,6 @@
             </div>
         </div>
     </form>
-   {{ map }}
-   {{race | json}}
+    {{ map }}
+    {{race | json}}
 </div>

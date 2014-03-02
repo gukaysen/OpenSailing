@@ -22,7 +22,7 @@ angular.module('OpenSailing.controllers', [])
             description: undefined,
             start_date: undefined,
             end_date: undefined,
-            selectedTrack : undefined,
+            selectedTrack: undefined,
             tracks: [
                 {
                     name: undefined,
@@ -59,7 +59,8 @@ angular.module('OpenSailing.controllers', [])
                     {
                         latitude: undefined,
                         longitude: undefined
-                    }],
+                    }
+                ],
                 stroke: {
                     color: '#6060FB',
                     weight: 2
@@ -69,16 +70,19 @@ angular.module('OpenSailing.controllers', [])
             finishing_line: {},
             waypoints: {},
             events: {
-                tilesloaded: function(amp, eventName, originalEventArgs) {
+                tilesloaded: function (map, eventName, originalEventArgs) {
 
                 },
-                click: function(mapModel, eventName, originalEventArgs) {
+                click: function (mapModel, eventName, originalEventArgs) {
                     console.log('click_event received: ' + eventName);
-                    var e = originalEventArgs[0];
-                    $scope.map.starting_line.path[0].latitude = e.latLng.lat();
-                    $scope.map.starting_line.path[0].longitude = e.latLng.lng() - 0.001;
-                    $scope.map.starting_line.path[1].latitude = e.latLng.lat();
-                    $scope.map.starting_line.path[1].longitude = e.latLng.lng() + 0.001;
+                    var e = originalEventArgs[0],
+                        p1 = e.latLng,
+                        p2 = google.maps.geometry.spherical.computeOffset(p1, 100, 90);
+
+                    $scope.map.starting_line.path[0].latitude = p1.lat();
+                    $scope.map.starting_line.path[0].longitude = p1.lng();
+                    $scope.map.starting_line.path[1].latitude = p2.lat();
+                    $scope.map.starting_line.path[1].longitude = p2.lng();
 
                     $scope.$apply();
                 }
@@ -104,7 +108,7 @@ angular.module('OpenSailing.controllers', [])
         };
 
         // addTrack() function for web form
-        $scope.addTrack = function() {
+        $scope.addTrack = function () {
             console.log('addTrack() called');
             if (!$scope.race.tracks) {
                 $scope.race.tracks = [];
@@ -116,16 +120,16 @@ angular.module('OpenSailing.controllers', [])
                     mode: 'SL_SELECT'
                 }
             );
-            $scope.race.selectedTrack = $scope.race.tracks.length-1;
+            $scope.race.selectedTrack = $scope.race.tracks.length - 1;
         };
 
         // selectTrack() function for web form
-        $scope.selectTrack = function(index) {
+        $scope.selectTrack = function (index) {
             $scope.race.selectedTrack = index;
         };
 
         // deleteTrack() function for web form
-        $scope.deleteTrack = function(index) {
+        $scope.deleteTrack = function (index) {
             $scope.race.tracks.splice(index, 1);
             $scope.race.selectedTrack = $scope.race.tracks.length === 0 ? undefined : $scope.race.tracks.length - 1;
         };
